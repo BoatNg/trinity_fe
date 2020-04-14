@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       # 使用 node:12
-      - name: use node version 12
+      - name: install node
         uses: actions/setup-node@v1
         with:
           node-version: 12
@@ -23,18 +23,12 @@ jobs:
           yarn generate
         env:
           CI: true
-
       - name: deploy
-        run: |
-          echo this step is deploy
-
-      # Deploy
-      # - name: Deploy
-      #   uses: easingthemes/ssh-deploy@v2.0.7
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-      #     ARGS: "-avz --delete"
-      #     SOURCE: "[Current File Dir]"
-      #     REMOTE_HOST: "[Domain]"
-      #     REMOTE_USER: "[UserName]"
-      #     TARGET: "[Server Dir]"
+        id: funny-deploy
+        uses: BoatNg/funny-deploy@v1.0.1
+        env:
+          REMOTE_HOST: "${{ secrets.REMOTE_HOST }}"
+          REMOTE_USER: "${{ secrets.REMOTE_USER }}"
+          REMOTE_PASSWORD: "${{ secrets.REMOTE_PASSWORD }}"
+          REMOTE_PATH: "/home/www/trinity_fe"
+          SOURCE: "dist/"
