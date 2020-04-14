@@ -23,6 +23,7 @@ jobs:
           yarn generate
         env:
           CI: true
+      # deploy
       - name: deploy
         id: funny-deploy
         uses: BoatNg/funny-deploy@v1.0.1
